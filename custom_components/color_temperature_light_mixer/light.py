@@ -156,7 +156,7 @@ class TemperatureMixerLight(LightGroup, RestoreSensor):
         brightnesses: list[int] = list(
             find_state_attributes(list(on_states.values()), ATTR_BRIGHTNESS)
         )
-        self._attr_brightness = int(sum(brightnesses) / 2) if brightnesses else None
+        self._attr_brightness = int(min(sum(brightnesses), 255)) if brightnesses else None
         self._attr_color_temp_kelvin = self._compute_color_temp_kelvin(on_states)
 
     def _compute_color_temp_kelvin(self, on_states: dict[str, State]) -> int | None:
